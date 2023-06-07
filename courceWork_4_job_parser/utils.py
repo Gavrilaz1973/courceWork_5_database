@@ -4,7 +4,7 @@ from work_api import HeadHunterAPI, SuperJobAPI
 
 
 def get_api_vacancies(platform, word):
-    count_vac = 5   # Количество вакансий с платформы
+    count_vac = 100   # Количество вакансий с платформы
 
     if platform == 1:
         vacancies_all = HeadHunterAPI(word, count_vac).vacancies_for_user()
@@ -22,14 +22,23 @@ def get_api_vacancies(platform, word):
     JSONSaver().add_vacancy(vacancies_all)
 
 
-
 def filter_vacancies(filter_words):
-    # filter_salary = []
-    # for vacancy in JSONSaver().get_vacancies_of_file():
-    #     if filter_words(0) <= vacancy['payment'] <= filter_words(1):
-    #         filter_salary.append(vacancy)
-    # return filter_salary
-    pass
+    filter_vac = []
+    for vacancy in JSONSaver().get_vacancies_of_file():
+
+        for i in filter_words:
+            if str(i).lower() in str(vacancy['requirements']).lower():
+                filter_vac.append(vacancy)
+                break
+
+    print(f'Найдено {len(filter_vac)} вакансий')
+    count_show = input('Сколько показать?   ')
+    n = 0
+    for vacancy in filter_vac:
+        n += 1
+        print(Vacancies(vacancy['name'], vacancy['url'], vacancy['payment'], vacancy['requirements']))
+        if n == count_show:
+            return
 
 
 def get_top_vacancies(top_n):

@@ -9,9 +9,9 @@ def user_interaction():
     top_n = int(input("Введите количество вакансий для вывода в топ N по начальной зарплате:   "))
     get_top_vacancies(top_n)
 
-    filter_words = input("Введите ключевые слова для фильтрации вакансий:   ").split(', ')
-    # filter_vacancies(filter_words)
-    print(filter_words)
+    filter_words = input("Введите ключевые слова для фильтрации вакансий по требованиям:   ").split(', ')
+    filter_vacancies(filter_words)
+
 
 if __name__ == "__main__":
     user_interaction()
