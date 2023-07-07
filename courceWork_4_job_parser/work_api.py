@@ -33,13 +33,13 @@ class HeadHunterAPI(WorkAPI):
             if i['salary']:
                 if i['salary']['from']:
                     vacancies_HH.append(dict(name=i['name'], url=i['alternate_url'], payment=i['salary']['from'],
-                                       requirements=i['snippet']['requirement']))
+                                       requirements=i['snippet']['requirement'], employer=i['employer']['name']))
                 else:
                     vacancies_HH.append(dict(name=i['name'], url=i['alternate_url'], payment=0,
-                                             requirements=i['snippet']['requirement']))
+                                             requirements=i['snippet']['requirement'], employer=i['employer']['name']))
             else:
                 vacancies_HH.append(dict(name=i['name'], url=i['alternate_url'], payment=0,
-                                       requirements=i['snippet']['requirement']))
+                                       requirements=i['snippet']['requirement'], employer=i['employer']['name']))
         return vacancies_HH
 
 
@@ -56,13 +56,16 @@ class SuperJobAPI(WorkAPI):
         data = self.get_vacancies()
         for i in data['objects']:
             vacancies_SJ.append(dict(name=i['profession'], url=i['link'], payment=i['payment_from'],
-                                       requirements=i['candidat']))
+                                       requirements=i['candidat'], employer=i['firm_name']))
         return vacancies_SJ
 
 
 
 if __name__ == "__main__":
     # hh_api = HeadHunterAPI("Python", 100)
-    # print(len(hh_api.vacancies_for_user()))
+    # # print(hh_api.get_vacancies())
+    # print(hh_api.vacancies_for_user())
+
     superjob_api = SuperJobAPI("курьер", 100)
-    print(len(superjob_api.vacancies_for_user()))
+    # print(superjob_api.get_vacancies())
+    print(superjob_api.vacancies_for_user())

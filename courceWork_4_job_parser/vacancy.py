@@ -19,13 +19,3 @@ class Vacancies:
             return self.payment < other.payment
         else:
             raise TypeError("other is not Vacancies")
-
-
-# vac_HH = HeadHunterAPI('Python', 3)
-# vac_SJ = SuperJobAPI('Python', 3)
-# vac_all = vac_HH.vacancies_for_user() + vac_SJ.vacancies_for_user()
-# for i in vac_all:
-#     Vacancies(i['name'], i['url'], i['payment'], i['requirements'])
-#     # print(vacancy)
-# for i in sorted(Vacancies.all, reverse=True):
-#     print(i)
