@@ -1,3 +1,6 @@
+import psycopg2 as psycopg2
+
+from config import config
 from file_saver import JSONSaver
 from vacancy import Vacancies
 from work_api import HeadHunterAPI, SuperJobAPI
@@ -19,8 +22,8 @@ def get_api_vacancies(platform, word):
         print('Такой платформы нет, попробуйте снова')
         exit()
 
-    JSONSaver().add_vacancy(vacancies_all)
-
+    # JSONSaver().add_vacancy(vacancies_all)
+    return vacancies_all
 
 def filter_vacancies(filter_words):
     filter_vac = []
@@ -52,4 +55,52 @@ def get_top_vacancies(top_n):
             return
 
 
+def create_database() -> None:
+    """Создает новую базу данных."""
+    db_name = 'db_curse_work_5'
+    params = config()
+    conn = None
+    conn = psycopg2.connect(dbname='postgres', **params)
+    conn.autocommit = True
+    cur = conn.cursor()
+    cur.execute(f"DROP DATABASE {db_name}")
+    cur.execute(f"CREATE DATABASE {db_name}")
+    conn.close()
+
+    conn = psycopg2.connect(dbname=db_name, **params)
+    with conn.cursor() as cur:
+        cur.execute("""
+            CREATE TABLE vacancies(
+                vac_id SERIAL PRIMARY KEY,
+                Наименование VARCHAR(255),
+                Ссылка VARCHAR(255),
+                Зарплата INTEGER,
+                Требования TEXT,
+                Кампания VARCHAR(255)
+                )
+                """)
+    conn.commit()
+    conn.close()
+
+
+def save_data_to_database(data):
+    db_name = 'db_curse_work_5'
+    params = config()
+    conn = psycopg2.connect(dbname=db_name, **params)
+    with conn.cursor() as cur:
+        for i in data:
+            cur.execute("""
+                INSERT INTO vacancies (Наименование, Ссылка, Зарплата, Требования, Кампания)
+                    VALUES (%s, %s, %s, %s, %s)
+                """,
+                        (i['name'], i['url'], i['payment'], i['requirements'], i['employer'])
+                        )
+    conn.commit()
+    conn.close()
+
+
+
+
+if __name__ == "__main__":
+    create_database()
 

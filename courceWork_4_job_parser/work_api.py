@@ -19,6 +19,7 @@ class WorkAPI(ABC):
 
 class HeadHunterAPI(WorkAPI):
     def get_vacancies(self):
+        """Получаеет вакансии с сайта по ключевому слову и указаному количеству"""
         name_value = "name:" + self.text
         params = {'text': name_value, 'area': 1, 'page': 0, 'per_page': self.count}
         req = requests.get('https://api.hh.ru/vacancies', params)
@@ -27,6 +28,7 @@ class HeadHunterAPI(WorkAPI):
         return data
 
     def vacancies_for_user(self):
+        """Преобразовавает полученные данные в список словарей с определенными полями"""
         vacancies_HH = []
         data = self.get_vacancies()
         for i in data['items']:
@@ -62,9 +64,9 @@ class SuperJobAPI(WorkAPI):
 
 
 if __name__ == "__main__":
-    # hh_api = HeadHunterAPI("Python", 100)
-    # # print(hh_api.get_vacancies())
-    # print(hh_api.vacancies_for_user())
+    hh_api = HeadHunterAPI("Python", 100)
+    # print(hh_api.get_vacancies())
+    print(hh_api.vacancies_for_user())
 
     superjob_api = SuperJobAPI("курьер", 100)
     # print(superjob_api.get_vacancies())
