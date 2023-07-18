@@ -62,12 +62,3 @@ class SuperJobAPI(WorkAPI):
         return vacancies_SJ
 
 
-
-if __name__ == "__main__":
-    hh_api = HeadHunterAPI("Python", 100)
-    # print(hh_api.get_vacancies())
-    print(hh_api.vacancies_for_user())
-
-    superjob_api = SuperJobAPI("курьер", 100)
-    # print(superjob_api.get_vacancies())
-    print(superjob_api.vacancies_for_user())

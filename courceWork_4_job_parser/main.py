@@ -1,4 +1,4 @@
-from utils import get_api_vacancies, filter_vacancies, get_top_vacancies, create_database, save_data_to_database
+from utils import get_api_vacancies, create_database, save_data_to_database
 
 
 def user_interaction():
@@ -7,15 +7,6 @@ def user_interaction():
     data = get_api_vacancies(search_platforms, search_query)
     create_database()
     save_data_to_database(data)
-
-
-
-
-    # top_n = int(input("Введите количество вакансий для вывода в топ N по начальной зарплате:   "))
-    # get_top_vacancies(top_n)
-    #
-    # filter_words = input("Введите ключевые слова для фильтрации вакансий по требованиям:   ").split(', ')
-    # filter_vacancies(filter_words)
 
 
 if __name__ == "__main__":
