@@ -32,7 +32,7 @@ def create_database() -> None:
     conn = psycopg2.connect(dbname='postgres', **params)
     conn.autocommit = True
     cur = conn.cursor()
-    cur.execute(f"DROP DATABASE {db_name}")
+    cur.execute(f"DROP DATABASE IF EXISTS {db_name}")
     cur.execute(f"CREATE DATABASE {db_name}")
     conn.close()
 

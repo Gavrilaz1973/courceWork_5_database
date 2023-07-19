@@ -15,7 +15,7 @@ class DBManager:
             cur.execute("""
                         SELECT company_title, COUNT(*)
                         FROM vacancies
-                        GROUP BY company_title
+                        GROUP BY company_title 
                         """)
             for row in cur:
                 print(row)
@@ -33,7 +33,6 @@ class DBManager:
                 print(row)
         conn.close()
 
-
     def get_avg_salary(self):
         """Получает среднюю зарплату по вакансиям"""
         conn = psycopg2.connect(dbname=self.db_name, **self.params)
@@ -44,7 +43,6 @@ class DBManager:
                         """)
             for row in cur:
                 self.avg_vacancies = int(row[0])
-                # print(self.avg_vacancies)
         conn.close()
         return self.avg_vacancies
 
@@ -67,7 +65,3 @@ class DBManager:
             for row in cur:
                 print(row)
         conn.close()
-
-
-if __name__ == "__main__":
-    DBManager().get_vacancies_with_keyword()
